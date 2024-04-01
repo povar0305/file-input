@@ -1,6 +1,8 @@
 <template>
   <div class="wrapper-inputs">
-    <file-input />
+    <file-input hint="Hint text" label="Label" />
+    <file-input error="Error text" label="Label" />
+    <file-input disabled label="Label" />
   </div>
 </template>
 
@@ -16,7 +18,13 @@ import FileInput from "@/components/file-input.vue";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 24px;
+}
+
+.wrapper-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 250px;
 }
 </style>

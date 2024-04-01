@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { defineProps, withDefaults } from "vue";
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
-    disabled: boolean;
+    disabled?: boolean;
   }>(),
   {
     disabled: false,
@@ -13,8 +13,7 @@ const props = withDefaults(
 
 <template>
   <button :disabled="disabled">
-    <slot />
-    button
+    <slot> button</slot>
   </button>
 </template>
 
