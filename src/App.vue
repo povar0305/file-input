@@ -9,8 +9,10 @@ import FileInput from "@/components/file-input.vue";
 </script>
 
 <style>
+@import url("/src/assets/main.css");
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Inter";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

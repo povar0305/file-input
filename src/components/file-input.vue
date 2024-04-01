@@ -8,7 +8,7 @@ const inputRef = ref<HTMLInputElement>();
 <template>
   <label
     >File
-    <v-button @click="inputRef.click()"> text</v-button>
+    <v-button disabled @click="inputRef.click()"> text</v-button>
     <input ref="inputRef" type="file" />
   </label>
 </template>

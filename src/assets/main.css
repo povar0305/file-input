@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "Inter";
+    src: url("./fonts/Inter-Regular.ttf");
+    font-weight: 400;
+}
+
+:root {
+    --color-neutral-700: #384252;
+    --color-neutral-400: #9CA3B0;
+    --color-neutral-300: #D0D5DC;
+    --color-neutral-200: #E5E7EB;
+    --color-neutral-100: #F3F4F6;
+    --color-base-white: #FFF;
+}
