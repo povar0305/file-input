@@ -1,24 +1,24 @@
-# file-input
+# Компонент загрузки файлов
 
-## Project setup
-```
-npm install
-```
+![image](https://github.com/povar0305/file-input/assets/73982948/55ccd7dc-2d82-45bd-82b9-d9ad277802b9)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Установка и запуск одной командой ``` npm run start ```.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Было сделао 2 компоненте - кнопка и инпут загрузки файла.
 
-### Lints and fixes files
-```
-npm run lint
-```
+Кнопка принимает пропсом свойство disabled(не обязательое, по дефолту false).
+Инпут загрузки файлов принимает:
+*   disabled (не обязательое) - дизаблим ли инпут, boolean
+*   label (не обязательое) - надпись над инпутом. string
+*   hint (не обязательое) - текст под инпутом, string
+*   error (не обязательое) - текст ошибки, string
+*   multiple (не обязательое, по дефолту false) - можно ли загружать несколько файлов, boolean
+*   accept (не обязательое, по дефолту image/*) - тип ожидаемых файлов, string
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+Инпут загрузки эмитит:
+* select-file  - эмитит выбранный файл, в момент выбора файла пользователем
+* succes-send - успешна загрузка файла на сервер. Сейчас так как нет бека, файл загружается по заглушке.
+* error-send - ошибка при загрузки файла на сервер
+* cancellation - отмена загрузки
+* delete - удаление файла из инпута
