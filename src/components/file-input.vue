@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import VButton from "@/components/v-button.vue";
-import { defineProps, ref, withDefaults } from "vue";
+import { defineEmits, defineProps, reactive, ref, withDefaults } from "vue";
 
 withDefaults(
   defineProps<{
@@ -13,7 +13,21 @@ withDefaults(
     disabled: false,
   }
 );
+
+const emit = defineEmits<{
+  (e: "select-file", file: never): void;
+}>();
+
 const inputRef = ref<HTMLInputElement>();
+const file = reactive({
+  status: false,
+  name: "",
+});
+
+function loadFile(event) {
+  emit("select-file", event.target.files[0]);
+  file.name = event.target.files[0].name;
+}
 </script>
 
 <template>
@@ -21,12 +35,17 @@ const inputRef = ref<HTMLInputElement>();
     <span v-show="label" class="label">
       {{ label }}
     </span>
-    <label>
-      <v-button :disabled="disabled" @click="inputRef.click()">
-        <slot>Выбрать файл</slot>
-      </v-button>
-      <input ref="inputRef" type="file" />
-    </label>
+    <div class="select-file">
+      <label>
+        <v-button :disabled="disabled" @click="inputRef.click()">
+          <slot>Выбрать файл</slot>
+        </v-button>
+        <input ref="inputRef" type="file" @change="loadFile" />
+      </label>
+      <span v-show="file.name.length == 0" class="select">Файл не выбран</span>
+      <span class="name">{{ file.name }}</span>
+    </div>
+
     <span v-show="hint" class="hint">{{ hint }}</span>
     <span v-show="error" class="error">{{ error }}</span>
   </div>
@@ -43,6 +62,25 @@ input {
   flex-direction: column;
   justify-content: start;
   font-family: "Inter", sans-serif;
+}
+
+.select-file {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  span {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.006em;
+    text-align: left;
+    color: var(--color-neutral-400);
+  }
+
+  span.name {
+    color: var(--color-neutral-500);
+  }
 }
 
 label {

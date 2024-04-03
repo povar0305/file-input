@@ -25,6 +25,5 @@ import FileInput from "@/components/file-input.vue";
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 250px;
 }
 </style>
