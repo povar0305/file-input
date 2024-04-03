@@ -8,25 +8,72 @@ withDefaults(
     label?: string;
     hint?: string;
     error?: string;
+    multiple?: boolean;
   }>(),
   {
     disabled: false,
+    multiple: false,
   }
 );
 
 const emit = defineEmits<{
-  (e: "select-file", file: never): void;
+  (e: "select-file", uploadFile: any): void;
+  (e: "succes-send", data: any): void;
+  (e: "error-send", error: any): void;
+  (e: "cancellation"): void;
+  (e: "delete"): void;
 }>();
 
 const inputRef = ref<HTMLInputElement>();
 const file = reactive({
-  status: false,
   name: "",
 });
+const showLoader = ref(false);
 
-function loadFile(event) {
-  emit("select-file", event.target.files[0]);
-  file.name = event.target.files[0].name;
+async function uploadFile(event: Event) {
+  const formData = new FormData();
+  file.name = "";
+  let i = 0;
+  let namesFile = [];
+  while (i < event.target.files.length) {
+    // выводит 0, затем 1, затем 2
+    console.log(event.target.files[i]);
+    formData.append("file", event.target.files[i]);
+    emit("select-file", event.target.files[i]);
+    namesFile.push(event.target.files[i].name);
+    i++;
+  }
+  file.name = namesFile.join(", ");
+
+  //
+  // headers: {
+  //   'Content-Type': 'text/plain'
+  // },
+
+  try {
+    showLoader.value = true;
+    const response = await fetch("/upload", { method: "POST", body: formData });
+    const data = await response.json();
+    emit("succes-send", data);
+    showLoader.value = false;
+  } catch (err) {
+    showLoader.value = false;
+    emit("error-send", err);
+  }
+}
+
+function selectFile() {
+  console.log(file.name.length);
+  if (file.name.length == 0) {
+    inputRef.value.click();
+  } else {
+    if (showLoader.value) {
+      emit("cancellation");
+    } else {
+      file.name = "";
+      emit("delete");
+    }
+  }
 }
 </script>
 
@@ -37,21 +84,54 @@ function loadFile(event) {
     </span>
     <div class="select-file">
       <label>
-        <v-button :disabled="disabled" @click="inputRef.click()">
-          <slot>Выбрать файл</slot>
+        <v-button :disabled="disabled" @click="selectFile">
+          <slot>
+            <span v-show="file.name == 0">
+              Выбрать файл<template v-if="multiple">ы</template>
+            </span>
+            <span v-show="!showLoader && file.name.length > 0">Удалить</span>
+            <span v-show="showLoader">Отменить</span>
+          </slot>
         </v-button>
-        <input ref="inputRef" type="file" @change="loadFile" />
+        <input
+          ref="inputRef"
+          :multiple="multiple"
+          type="file"
+          @change="uploadFile"
+        />
       </label>
       <span v-show="file.name.length == 0" class="select">Файл не выбран</span>
-      <span class="name">{{ file.name }}</span>
+      <span class="name">
+        <img
+          v-show="showLoader"
+          alt="Иконка лоадера"
+          class="loader"
+          src="@/assets/icons/icon-loader.svg"
+        />
+        {{ file.name }}</span
+      >
     </div>
-
     <span v-show="hint" class="hint">{{ hint }}</span>
     <span v-show="error" class="error">{{ error }}</span>
   </div>
 </template>
 
 <style scoped>
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  animation: 0.5s linear infinite rotate;
+  transition: 0.3s;
+}
+
 input {
   position: absolute;
   left: -9999px;

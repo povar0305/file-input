@@ -1,7 +1,24 @@
 <template>
   <div class="wrapper-inputs">
-    <file-input hint="Hint text" label="Label" />
-    <file-input error="Error text" label="Label" />
+    <file-input
+      hint="Hint text"
+      label="Label"
+      @select-file="console.log('select', $event)"
+      @error-send="console.log('error-send', $event)"
+    />
+    <file-input
+      hint="multiple"
+      label="Label"
+      multiple
+      @select-file="console.log('select', $event)"
+      @error-send="console.log('error-send', $event)"
+    />
+    <file-input
+      error="Error text"
+      label="Label"
+      @select-file="console.log('select', $event)"
+      @error-send="console.log('error-send', $event)"
+    />
     <file-input disabled label="Label" />
   </div>
 </template>
