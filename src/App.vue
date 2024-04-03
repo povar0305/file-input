@@ -7,7 +7,14 @@
       @error-send="console.log('error-send', $event)"
     />
     <file-input
-      hint="multiple"
+      accept="video/*"
+      hint="Выбор только видео файлов"
+      label="Label"
+      @select-file="console.log('select', $event)"
+      @error-send="console.log('error-send', $event)"
+    />
+    <file-input
+      hint="Выбор нескольких файлов"
       label="Label"
       multiple
       @select-file="console.log('select', $event)"
@@ -19,7 +26,7 @@
       @select-file="console.log('select', $event)"
       @error-send="console.log('error-send', $event)"
     />
-    <file-input disabled label="Label" />
+    <file-input disabled label="Задизаблено" />
   </div>
 </template>
 

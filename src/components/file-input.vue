@@ -9,10 +9,12 @@ withDefaults(
     hint?: string;
     error?: string;
     multiple?: boolean;
+    accept?: string;
   }>(),
   {
     disabled: false,
     multiple: false,
+    accept: "image/*",
   }
 );
 
@@ -95,6 +97,7 @@ function selectFile() {
         </v-button>
         <input
           ref="inputRef"
+          :accept="accept"
           :multiple="multiple"
           type="file"
           @change="uploadFile"
