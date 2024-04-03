@@ -38,19 +38,12 @@ async function uploadFile(event: Event) {
   let i = 0;
   let namesFile = [];
   while (i < event.target.files.length) {
-    // выводит 0, затем 1, затем 2
-    console.log(event.target.files[i]);
     formData.append("file", event.target.files[i]);
     emit("select-file", event.target.files[i]);
     namesFile.push(event.target.files[i].name);
     i++;
   }
   file.name = namesFile.join(", ");
-
-  //
-  // headers: {
-  //   'Content-Type': 'text/plain'
-  // },
 
   try {
     showLoader.value = true;
@@ -65,7 +58,6 @@ async function uploadFile(event: Event) {
 }
 
 function selectFile() {
-  console.log(file.name.length);
   if (file.name.length == 0) {
     inputRef.value.click();
   } else {
@@ -104,15 +96,15 @@ function selectFile() {
         />
       </label>
       <span v-show="file.name.length == 0" class="select">Файл не выбран</span>
-      <span class="name">
+      <span v-show="file.name.length > 0" class="name">
         <img
           v-show="showLoader"
           alt="Иконка лоадера"
           class="loader"
           src="@/assets/icons/icon-loader.svg"
         />
-        {{ file.name }}</span
-      >
+        {{ file.name }}
+      </span>
     </div>
     <span v-show="hint" class="hint">{{ hint }}</span>
     <span v-show="error" class="error">{{ error }}</span>
