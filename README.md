@@ -6,7 +6,7 @@
 
 [Фигма](https://www.figma.com/file/dmSqtmI03pj0BjCM6iTZfU/%D0%A2%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D0%BE%D0%B5.-File-Input?type=design&node-id=0-1&mode=design&t=dAEbc6kE67j9ZwSc-0)
 
-Было сделано 2 компоненте - кнопка и инпут загрузки файла.
+Было сделано 2 компонента - кнопка и инпут загрузки файла.
 
 Кнопка принимает пропсом свойство disabled(не обязательное, по дефолту false).
 
